@@ -1,14 +1,38 @@
-const {app, BrowserWindow} = require('electron');
+const {electron, app, BrowserWindow, Menu} = require('electron');
 const path = require('path')
 const url = require('url')
 
 app.setName('Tech Talk');
 
+let menuTemplate = [{
+  label: 'Edit',
+  submenu: [{
+      label: 'Copy',
+      accelerator: 'CmdOrCtrl+C',
+      role: 'copy'
+    },{
+      label: 'Paste',
+      accelerator: 'CmdOrCtrl+V',
+      role: 'paste'
+    }]
+  },{
+  label: 'Help',
+  role: 'help',
+  submenu: [{
+    label: 'Learn More',
+    click: function () {
+      electron.shell.openExternal('http://electron.atom.io')
+    }
+  }]
+}];
+const menu = Menu.buildFromTemplate(menuTemplate)
+
+
 function createWindow () {
 
   // Create the browser window.
   // use show: false option to use window as thread to run in background
-  win = new BrowserWindow({width: 400, height: 320})
+  win = new BrowserWindow({width: 800, height: 600})
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -18,7 +42,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  //win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -30,17 +54,8 @@ function createWindow () {
 
 }
 
-//on window crash
-// win.webContents.on('crashed', function () {
-//   win.reload();    
-// })
-
-
-//on window hang
-// win.on('unresponsive', function () {
-//   win.reload();
-// })
-
-
-app.on('ready', createWindow)
+app.on('ready', function(){
+  createWindow()
+  Menu.setApplicationMenu(menu) 
+})
 
