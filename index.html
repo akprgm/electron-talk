@@ -1,7 +1,7 @@
 <h1>Hello People</h1>
 
 
-<button id="openImage">click here to open file</button>
+<button id="notify">Get Notified</button>
 
 <script>
 	
@@ -9,13 +9,20 @@ const BrowserWindow = require('electron').remote.BrowserWindow
 
 const path = require('path')
 
-const openImageBtn = document.getElementById('openImage')
+const openImageBtn = document.getElementById('notify')
 
-openImageBtn.addEventListener('click', function (event) {
-  const modalPath = path.join('file:///Users/anilkumar/Pictures/wallpaper/WallpaperStudio10-35719.jpg')
-  let win = new BrowserWindow({ width: 400, height: 320 })
-  win.on('close', function () { win = null })
-  win.loadURL(modalPath)
-  win.show()
+const notification = {
+  title: 'Basic Notification',
+  body: 'hooray',
+  //icon: ""
+}
+const notifyBtn = document.getElementById('notify')
+
+notifyBtn.addEventListener('click', function () {
+  const myNotification = new window.Notification(notification.title, notification)
+
+  myNotification.onclick = () => {
+    console.log('Notification clicked')
+  }
 })
 </script>
