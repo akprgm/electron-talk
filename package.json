@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "electron app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package:mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --out=out"
   },
   "keywords": [],
   "author": "",
