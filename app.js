@@ -1,32 +1,8 @@
-const {electron, app, BrowserWindow, Menu} = require('electron');
+const {electron, app, BrowserWindow, globalShortcut} = require('electron');
 const path = require('path')
 const url = require('url')
 
 app.setName('Tech Talk');
-
-let menuTemplate = [{
-  label: 'Edit',
-  submenu: [{
-      label: 'Copy',
-      accelerator: 'CmdOrCtrl+C',
-      role: 'copy'
-    },{
-      label: 'Paste',
-      accelerator: 'CmdOrCtrl+V',
-      role: 'paste'
-    }]
-  },{
-  label: 'Help',
-  role: 'help',
-  submenu: [{
-    label: 'Learn More',
-    click: function () {
-      electron.shell.openExternal('http://electron.atom.io')
-    }
-  }]
-}];
-const menu = Menu.buildFromTemplate(menuTemplate)
-
 
 function createWindow () {
 
@@ -56,6 +32,9 @@ function createWindow () {
 
 app.on('ready', function(){
   createWindow()
-  Menu.setApplicationMenu(menu) 
+
+  globalShortcut.register('CommandOrControl+X', function () {
+    console.log("too busy");
+  })
 })
 
