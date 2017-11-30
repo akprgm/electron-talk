@@ -1,17 +1,20 @@
 <h1>Hello People</h1>
 
 
-<!-- <button id="new-window">New Window</button> -->
+<button id="sendMsg">Send Message</button>
+<h3 id="replyMsg"></h3>
 <script>
-	const BrowserWindow = require('electron').remote.BrowserWindow
+	const ipc = require('electron').ipcRenderer
 
-	const path = require('path');
+	const sendMsg = document.getElementById('sendMsg')
 
-	const newWindowBtn = document.getElementById('new-window')
+	sendMsg.addEventListener('click', function () {
+	  ipc.send('message', 'ping')
+	  //ipc.sendSync('message', 'ping');
+	})
 
-	newWindowBtn.addEventListener('click', function (event) {
-	  let win = new BrowserWindow({ width: 200, height: 100 })
-	  win.on('close', function () { win = null })
-	  win.show()
+	ipc.on('reply', function (event, arg) {
+	  const message = `reply: ${arg}`;
+	  document.getElementById('replyMsg').innerHTML = message
 	})
 </script>
