@@ -1,20 +1,21 @@
 <h1>Hello People</h1>
 
 
-<button id="sendMsg">Send Message</button>
-<h3 id="replyMsg"></h3>
+<button id="openImage">click here to open file</button>
+
 <script>
-	const ipc = require('electron').ipcRenderer
+	
+const BrowserWindow = require('electron').remote.BrowserWindow
 
-	const sendMsg = document.getElementById('sendMsg')
+const path = require('path')
 
-	sendMsg.addEventListener('click', function () {
-	  ipc.send('message', 'ping')
-	  //ipc.sendSync('message', 'ping');
-	})
+const openImageBtn = document.getElementById('openImage')
 
-	ipc.on('reply', function (event, arg) {
-	  const message = `reply: ${arg}`;
-	  document.getElementById('replyMsg').innerHTML = message
-	})
+openImageBtn.addEventListener('click', function (event) {
+  const modalPath = path.join('file:///Users/anilkumar/Pictures/wallpaper/WallpaperStudio10-35719.jpg')
+  let win = new BrowserWindow({ width: 400, height: 320 })
+  win.on('close', function () { win = null })
+  win.loadURL(modalPath)
+  win.show()
+})
 </script>

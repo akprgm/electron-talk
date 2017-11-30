@@ -32,6 +32,3 @@ function createWindow () {
 
 app.on('ready', createWindow)
 
-ipcMain.on('message', function (event, arg) {
-  event.sender.send('reply', 'pong')
-})
